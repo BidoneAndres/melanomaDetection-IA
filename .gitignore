@@ -1,0 +1,10 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.pth
+*.h5
+
+data/raw/*
+data/processed/*
