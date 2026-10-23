@@ -1,0 +1,247 @@
+lesion_id,image_id,dx,dx_type,age,sex,localization,label,etiqueta
+HAM_0006602,ISIC_0026598,nv,follow_up,65.0,male,trunk,lunar_benigno,0
+HAM_0006403,ISIC_0030248,nv,follow_up,40.0,female,trunk,lunar_benigno,0
+HAM_0003660,ISIC_0026667,nv,follow_up,55.0,male,back,lunar_benigno,0
+HAM_0005777,ISIC_0033325,mel,histo,60.0,male,chest,melanoma,1
+HAM_0003323,ISIC_0031297,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0007488,ISIC_0024952,mel,histo,60.0,male,back,melanoma,1
+HAM_0002391,ISIC_0029434,mel,histo,70.0,male,upper extremity,melanoma,1
+HAM_0007019,ISIC_0029454,mel,histo,80.0,male,back,melanoma,1
+HAM_0006491,ISIC_0033657,nv,histo,40.0,female,back,lunar_benigno,0
+HAM_0006494,ISIC_0029714,nv,follow_up,60.0,female,trunk,lunar_benigno,0
+HAM_0002685,ISIC_0030593,nv,histo,30.0,male,chest,lunar_benigno,0
+HAM_0000241,ISIC_0030932,mel,histo,70.0,female,lower extremity,melanoma,1
+HAM_0005561,ISIC_0031080,nv,histo,30.0,female,abdomen,lunar_benigno,0
+HAM_0004927,ISIC_0034117,mel,histo,70.0,male,abdomen,melanoma,1
+HAM_0003099,ISIC_0025734,nv,histo,25.0,male,back,lunar_benigno,0
+HAM_0006779,ISIC_0028860,mel,histo,65.0,male,back,melanoma,1
+HAM_0002413,ISIC_0032543,nv,consensus,30.0,male,back,lunar_benigno,0
+HAM_0001913,ISIC_0030798,mel,histo,80.0,male,upper extremity,melanoma,1
+HAM_0001445,ISIC_0029433,nv,follow_up,35.0,male,trunk,lunar_benigno,0
+HAM_0007498,ISIC_0028156,mel,histo,55.0,male,upper extremity,melanoma,1
+HAM_0003351,ISIC_0033878,mel,histo,80.0,female,face,melanoma,1
+HAM_0006957,ISIC_0028402,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0006160,ISIC_0030950,mel,histo,70.0,female,hand,melanoma,1
+HAM_0002264,ISIC_0024838,nv,follow_up,45.0,female,abdomen,lunar_benigno,0
+HAM_0001753,ISIC_0024929,mel,histo,55.0,male,back,melanoma,1
+HAM_0005815,ISIC_0030327,nv,follow_up,40.0,male,lower extremity,lunar_benigno,0
+HAM_0001280,ISIC_0033704,mel,histo,60.0,male,back,melanoma,1
+HAM_0002999,ISIC_0029844,nv,follow_up,40.0,male,back,lunar_benigno,0
+HAM_0002779,ISIC_0026515,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0007321,ISIC_0026821,nv,follow_up,50.0,female,back,lunar_benigno,0
+HAM_0000317,ISIC_0030984,nv,follow_up,45.0,male,trunk,lunar_benigno,0
+HAM_0000334,ISIC_0026860,nv,follow_up,35.0,female,abdomen,lunar_benigno,0
+HAM_0002342,ISIC_0032925,mel,histo,40.0,male,back,melanoma,1
+HAM_0001321,ISIC_0033471,nv,histo,70.0,male,chest,lunar_benigno,0
+HAM_0005251,ISIC_0026868,mel,histo,75.0,male,lower extremity,melanoma,1
+HAM_0006696,ISIC_0026094,mel,histo,20.0,male,back,melanoma,1
+HAM_0003160,ISIC_0029587,nv,follow_up,75.0,female,back,lunar_benigno,0
+HAM_0000388,ISIC_0032844,mel,histo,60.0,male,back,melanoma,1
+HAM_0005879,ISIC_0025262,nv,histo,80.0,male,lower extremity,lunar_benigno,0
+HAM_0005755,ISIC_0028174,nv,histo,50.0,male,face,lunar_benigno,0
+HAM_0004498,ISIC_0025586,nv,follow_up,35.0,male,upper extremity,lunar_benigno,0
+HAM_0001976,ISIC_0026586,mel,histo,85.0,male,upper extremity,melanoma,1
+HAM_0006942,ISIC_0032430,mel,histo,55.0,male,face,melanoma,1
+HAM_0003843,ISIC_0034036,mel,histo,35.0,male,abdomen,melanoma,1
+HAM_0006253,ISIC_0030171,mel,histo,65.0,male,back,melanoma,1
+HAM_0001532,ISIC_0027204,mel,histo,70.0,male,neck,melanoma,1
+HAM_0001405,ISIC_0033390,nv,histo,55.0,female,lower extremity,lunar_benigno,0
+HAM_0005408,ISIC_0031613,nv,histo,65.0,female,lower extremity,lunar_benigno,0
+HAM_0000511,ISIC_0026669,nv,follow_up,45.0,male,trunk,lunar_benigno,0
+HAM_0000534,ISIC_0025235,mel,histo,45.0,female,lower extremity,melanoma,1
+HAM_0003189,ISIC_0027324,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0000814,ISIC_0025751,mel,histo,65.0,male,back,melanoma,1
+HAM_0002099,ISIC_0026847,mel,histo,65.0,male,back,melanoma,1
+HAM_0003545,ISIC_0029718,nv,follow_up,80.0,male,trunk,lunar_benigno,0
+HAM_0000258,ISIC_0030909,nv,consensus,30.0,female,scalp,lunar_benigno,0
+HAM_0003454,ISIC_0031764,nv,follow_up,55.0,female,lower extremity,lunar_benigno,0
+HAM_0007367,ISIC_0032705,nv,histo,5.0,male,trunk,lunar_benigno,0
+HAM_0002088,ISIC_0024377,nv,histo,45.0,female,lower extremity,lunar_benigno,0
+HAM_0000021,ISIC_0026773,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0004936,ISIC_0025573,mel,histo,80.0,male,chest,melanoma,1
+HAM_0006975,ISIC_0024967,mel,histo,60.0,male,back,melanoma,1
+HAM_0003350,ISIC_0024310,mel,histo,60.0,male,chest,melanoma,1
+HAM_0002401,ISIC_0028204,nv,follow_up,40.0,male,abdomen,lunar_benigno,0
+HAM_0005104,ISIC_0030204,nv,follow_up,35.0,male,back,lunar_benigno,0
+HAM_0007242,ISIC_0026774,mel,histo,70.0,female,upper extremity,melanoma,1
+HAM_0005624,ISIC_0030760,mel,histo,55.0,female,upper extremity,melanoma,1
+HAM_0002197,ISIC_0028709,mel,histo,50.0,male,back,melanoma,1
+HAM_0003556,ISIC_0033485,mel,histo,60.0,male,lower extremity,melanoma,1
+HAM_0002732,ISIC_0033874,mel,histo,65.0,male,chest,melanoma,1
+HAM_0002897,ISIC_0030552,mel,histo,75.0,male,back,melanoma,1
+HAM_0004952,ISIC_0028111,nv,follow_up,55.0,male,trunk,lunar_benigno,0
+HAM_0001703,ISIC_0024496,mel,histo,60.0,female,lower extremity,melanoma,1
+HAM_0007310,ISIC_0028412,mel,histo,55.0,male,back,melanoma,1
+HAM_0005240,ISIC_0030169,nv,follow_up,65.0,male,abdomen,lunar_benigno,0
+HAM_0005628,ISIC_0032940,mel,histo,70.0,male,scalp,melanoma,1
+HAM_0000863,ISIC_0028899,mel,histo,70.0,male,back,melanoma,1
+HAM_0001600,ISIC_0025891,mel,histo,65.0,female,lower extremity,melanoma,1
+HAM_0006204,ISIC_0029806,nv,follow_up,60.0,male,trunk,lunar_benigno,0
+HAM_0006453,ISIC_0025744,mel,histo,70.0,male,abdomen,melanoma,1
+HAM_0003451,ISIC_0027098,nv,histo,70.0,male,back,lunar_benigno,0
+HAM_0000392,ISIC_0034275,mel,histo,70.0,male,trunk,melanoma,1
+HAM_0007473,ISIC_0025858,nv,follow_up,60.0,male,upper extremity,lunar_benigno,0
+HAM_0005680,ISIC_0027177,nv,follow_up,25.0,male,trunk,lunar_benigno,0
+HAM_0001069,ISIC_0028898,mel,histo,60.0,female,lower extremity,melanoma,1
+HAM_0005692,ISIC_0031931,mel,histo,70.0,female,face,melanoma,1
+HAM_0003509,ISIC_0027832,mel,histo,75.0,male,lower extremity,melanoma,1
+HAM_0003070,ISIC_0032323,nv,follow_up,50.0,male,trunk,lunar_benigno,0
+HAM_0007613,ISIC_0024912,nv,follow_up,45.0,male,trunk,lunar_benigno,0
+HAM_0007368,ISIC_0032017,mel,histo,70.0,male,face,melanoma,1
+HAM_0003298,ISIC_0031535,nv,follow_up,50.0,male,back,lunar_benigno,0
+HAM_0000123,ISIC_0032293,nv,follow_up,50.0,female,upper extremity,lunar_benigno,0
+HAM_0004828,ISIC_0028848,nv,follow_up,50.0,female,lower extremity,lunar_benigno,0
+HAM_0006432,ISIC_0030884,nv,follow_up,45.0,male,back,lunar_benigno,0
+HAM_0000568,ISIC_0026990,nv,follow_up,45.0,female,trunk,lunar_benigno,0
+HAM_0000136,ISIC_0028065,mel,histo,60.0,male,back,melanoma,1
+HAM_0003885,ISIC_0027560,mel,histo,25.0,female,face,melanoma,1
+HAM_0002026,ISIC_0027524,nv,follow_up,40.0,female,neck,lunar_benigno,0
+HAM_0004002,ISIC_0027628,nv,follow_up,55.0,male,foot,lunar_benigno,0
+HAM_0006097,ISIC_0034253,mel,histo,60.0,male,chest,melanoma,1
+HAM_0000686,ISIC_0031523,nv,follow_up,65.0,female,trunk,lunar_benigno,0
+HAM_0004578,ISIC_0034239,mel,histo,85.0,male,lower extremity,melanoma,1
+HAM_0003385,ISIC_0025839,nv,follow_up,40.0,female,back,lunar_benigno,0
+HAM_0001563,ISIC_0028633,nv,histo,55.0,female,ear,lunar_benigno,0
+HAM_0002708,ISIC_0029247,nv,consensus,0.0,male,lower extremity,lunar_benigno,0
+HAM_0001031,ISIC_0030626,nv,histo,40.0,male,trunk,lunar_benigno,0
+HAM_0000022,ISIC_0031377,mel,histo,65.0,male,back,melanoma,1
+HAM_0003340,ISIC_0028507,nv,histo,70.0,female,back,lunar_benigno,0
+HAM_0006805,ISIC_0029772,nv,follow_up,50.0,male,back,lunar_benigno,0
+HAM_0003948,ISIC_0025806,nv,follow_up,55.0,male,lower extremity,lunar_benigno,0
+HAM_0002952,ISIC_0033518,mel,histo,80.0,male,upper extremity,melanoma,1
+HAM_0001272,ISIC_0029265,mel,histo,85.0,male,upper extremity,melanoma,1
+HAM_0006383,ISIC_0025183,nv,follow_up,75.0,female,trunk,lunar_benigno,0
+HAM_0000619,ISIC_0026690,mel,histo,50.0,male,lower extremity,melanoma,1
+HAM_0006660,ISIC_0025055,nv,follow_up,45.0,male,upper extremity,lunar_benigno,0
+HAM_0006964,ISIC_0027163,mel,histo,60.0,female,lower extremity,melanoma,1
+HAM_0007272,ISIC_0024756,mel,histo,60.0,male,lower extremity,melanoma,1
+HAM_0004059,ISIC_0029399,nv,follow_up,40.0,female,lower extremity,lunar_benigno,0
+HAM_0005497,ISIC_0029506,nv,follow_up,60.0,male,abdomen,lunar_benigno,0
+HAM_0000972,ISIC_0031605,nv,follow_up,60.0,male,chest,lunar_benigno,0
+HAM_0007201,ISIC_0026208,nv,follow_up,50.0,male,lower extremity,lunar_benigno,0
+HAM_0000952,ISIC_0024546,mel,histo,80.0,female,lower extremity,melanoma,1
+HAM_0003506,ISIC_0033405,mel,histo,70.0,male,upper extremity,melanoma,1
+HAM_0002591,ISIC_0028930,mel,histo,55.0,female,lower extremity,melanoma,1
+HAM_0000278,ISIC_0024484,nv,follow_up,55.0,male,abdomen,lunar_benigno,0
+HAM_0006632,ISIC_0026196,nv,follow_up,60.0,female,upper extremity,lunar_benigno,0
+HAM_0005313,ISIC_0033335,nv,consensus,20.0,male,back,lunar_benigno,0
+HAM_0002244,ISIC_0034320,nv,histo,25.0,female,chest,lunar_benigno,0
+HAM_0002719,ISIC_0029033,mel,histo,30.0,female,upper extremity,melanoma,1
+HAM_0003700,ISIC_0033300,mel,histo,40.0,female,lower extremity,melanoma,1
+HAM_0002917,ISIC_0032506,nv,follow_up,60.0,male,abdomen,lunar_benigno,0
+HAM_0005280,ISIC_0033063,mel,histo,70.0,male,upper extremity,melanoma,1
+HAM_0005061,ISIC_0032466,mel,histo,60.0,male,lower extremity,melanoma,1
+HAM_0005400,ISIC_0029363,mel,histo,80.0,male,back,melanoma,1
+HAM_0005504,ISIC_0027480,mel,histo,55.0,female,foot,melanoma,1
+HAM_0001696,ISIC_0027408,nv,histo,80.0,male,back,lunar_benigno,0
+HAM_0001518,ISIC_0028914,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0006747,ISIC_0029254,nv,histo,50.0,male,face,lunar_benigno,0
+HAM_0004754,ISIC_0032790,mel,histo,65.0,male,back,melanoma,1
+HAM_0005826,ISIC_0031077,mel,histo,65.0,female,trunk,melanoma,1
+HAM_0000075,ISIC_0025651,mel,histo,70.0,male,back,melanoma,1
+HAM_0006626,ISIC_0029914,mel,histo,60.0,male,lower extremity,melanoma,1
+HAM_0003202,ISIC_0032718,mel,histo,65.0,male,chest,melanoma,1
+HAM_0004797,ISIC_0024895,nv,follow_up,50.0,female,back,lunar_benigno,0
+HAM_0005568,ISIC_0032047,nv,histo,50.0,female,unknown,lunar_benigno,0
+HAM_0001685,ISIC_0027516,nv,follow_up,35.0,male,trunk,lunar_benigno,0
+HAM_0007620,ISIC_0030089,mel,histo,55.0,female,back,melanoma,1
+HAM_0003864,ISIC_0029586,nv,follow_up,60.0,female,upper extremity,lunar_benigno,0
+HAM_0001353,ISIC_0030759,mel,histo,55.0,female,face,melanoma,1
+HAM_0005581,ISIC_0033337,mel,histo,50.0,male,back,melanoma,1
+HAM_0000058,ISIC_0030302,nv,follow_up,45.0,female,lower extremity,lunar_benigno,0
+HAM_0005010,ISIC_0033962,mel,histo,30.0,female,upper extremity,melanoma,1
+HAM_0005351,ISIC_0033549,nv,histo,20.0,female,lower extremity,lunar_benigno,0
+HAM_0005734,ISIC_0025048,nv,follow_up,50.0,male,trunk,lunar_benigno,0
+HAM_0001284,ISIC_0024972,mel,histo,75.0,female,ear,melanoma,1
+HAM_0004547,ISIC_0031303,mel,histo,65.0,male,face,melanoma,1
+HAM_0002772,ISIC_0026897,mel,histo,75.0,male,back,melanoma,1
+HAM_0006627,ISIC_0029511,nv,follow_up,50.0,male,lower extremity,lunar_benigno,0
+HAM_0001828,ISIC_0030692,nv,follow_up,70.0,male,lower extremity,lunar_benigno,0
+HAM_0002911,ISIC_0029272,mel,histo,60.0,female,back,melanoma,1
+HAM_0000903,ISIC_0024702,mel,histo,60.0,male,back,melanoma,1
+HAM_0001598,ISIC_0029238,mel,histo,65.0,male,back,melanoma,1
+HAM_0006960,ISIC_0027592,nv,follow_up,50.0,female,trunk,lunar_benigno,0
+HAM_0007163,ISIC_0033268,mel,histo,50.0,female,lower extremity,melanoma,1
+HAM_0005711,ISIC_0033911,mel,histo,35.0,male,back,melanoma,1
+HAM_0003898,ISIC_0028713,nv,follow_up,45.0,male,foot,lunar_benigno,0
+HAM_0001682,ISIC_0026630,nv,follow_up,50.0,male,trunk,lunar_benigno,0
+HAM_0007408,ISIC_0028377,nv,follow_up,5.0,male,back,lunar_benigno,0
+HAM_0003531,ISIC_0031999,mel,histo,40.0,male,face,melanoma,1
+HAM_0004287,ISIC_0031128,nv,follow_up,60.0,male,trunk,lunar_benigno,0
+HAM_0002869,ISIC_0024313,mel,histo,50.0,female,back,melanoma,1
+HAM_0002295,ISIC_0027999,nv,histo,40.0,male,back,lunar_benigno,0
+HAM_0000002,ISIC_0032622,mel,histo,65.0,female,lower extremity,melanoma,1
+HAM_0000590,ISIC_0030951,mel,histo,85.0,female,lower extremity,melanoma,1
+HAM_0003502,ISIC_0027290,nv,follow_up,60.0,male,trunk,lunar_benigno,0
+HAM_0004165,ISIC_0033346,nv,consensus,75.0,male,back,lunar_benigno,0
+HAM_0001657,ISIC_0031529,mel,histo,40.0,female,abdomen,melanoma,1
+HAM_0005673,ISIC_0033487,mel,histo,60.0,male,back,melanoma,1
+HAM_0006923,ISIC_0032656,mel,histo,80.0,male,foot,melanoma,1
+HAM_0005992,ISIC_0032751,mel,histo,25.0,female,back,melanoma,1
+HAM_0004562,ISIC_0031387,nv,follow_up,45.0,male,abdomen,lunar_benigno,0
+HAM_0000939,ISIC_0028620,nv,follow_up,35.0,female,trunk,lunar_benigno,0
+HAM_0000775,ISIC_0025097,mel,histo,55.0,male,chest,melanoma,1
+HAM_0000942,ISIC_0028554,nv,follow_up,75.0,female,abdomen,lunar_benigno,0
+HAM_0002148,ISIC_0031214,nv,follow_up,70.0,male,back,lunar_benigno,0
+HAM_0003626,ISIC_0030288,nv,follow_up,55.0,male,trunk,lunar_benigno,0
+HAM_0001635,ISIC_0028240,nv,follow_up,80.0,male,lower extremity,lunar_benigno,0
+HAM_0000019,ISIC_0025396,nv,histo,50.0,female,back,lunar_benigno,0
+HAM_0005256,ISIC_0033728,mel,histo,80.0,male,back,melanoma,1
+HAM_0003534,ISIC_0028493,mel,histo,85.0,male,chest,melanoma,1
+HAM_0001527,ISIC_0026767,nv,follow_up,40.0,male,lower extremity,lunar_benigno,0
+HAM_0004782,ISIC_0026264,nv,follow_up,75.0,male,upper extremity,lunar_benigno,0
+HAM_0005040,ISIC_0033302,mel,histo,40.0,female,upper extremity,melanoma,1
+HAM_0005223,ISIC_0029536,nv,follow_up,70.0,female,trunk,lunar_benigno,0
+HAM_0006877,ISIC_0028227,mel,histo,55.0,male,upper extremity,melanoma,1
+HAM_0006692,ISIC_0029163,mel,histo,80.0,male,scalp,melanoma,1
+HAM_0006435,ISIC_0033573,mel,histo,50.0,male,back,melanoma,1
+HAM_0005352,ISIC_0027100,mel,histo,75.0,male,face,melanoma,1
+HAM_0007538,ISIC_0031941,mel,histo,55.0,male,trunk,melanoma,1
+HAM_0004984,ISIC_0032879,mel,histo,80.0,male,face,melanoma,1
+HAM_0002906,ISIC_0026604,mel,histo,70.0,male,ear,melanoma,1
+HAM_0002488,ISIC_0032807,mel,histo,50.0,male,face,melanoma,1
+HAM_0000396,ISIC_0028481,mel,histo,70.0,male,lower extremity,melanoma,1
+HAM_0004777,ISIC_0026749,nv,consensus,25.0,female,foot,lunar_benigno,0
+HAM_0001378,ISIC_0025313,mel,histo,35.0,female,lower extremity,melanoma,1
+HAM_0005555,ISIC_0032079,mel,histo,60.0,female,chest,melanoma,1
+HAM_0002600,ISIC_0032588,nv,consensus,25.0,male,unknown,lunar_benigno,0
+HAM_0007234,ISIC_0033362,mel,histo,85.0,female,back,melanoma,1
+HAM_0001647,ISIC_0033730,mel,histo,70.0,female,back,melanoma,1
+HAM_0003749,ISIC_0025268,mel,histo,65.0,male,upper extremity,melanoma,1
+HAM_0007102,ISIC_0028655,mel,histo,55.0,male,neck,melanoma,1
+HAM_0005737,ISIC_0033885,mel,histo,60.0,female,lower extremity,melanoma,1
+HAM_0002147,ISIC_0029537,nv,consensus,5.0,female,hand,lunar_benigno,0
+HAM_0007560,ISIC_0026892,mel,histo,75.0,male,unknown,melanoma,1
+HAM_0006467,ISIC_0027622,mel,histo,40.0,female,upper extremity,melanoma,1
+HAM_0000240,ISIC_0028552,nv,follow_up,60.0,male,trunk,lunar_benigno,0
+HAM_0002474,ISIC_0030658,nv,follow_up,50.0,male,trunk,lunar_benigno,0
+HAM_0006068,ISIC_0024591,nv,follow_up,35.0,male,back,lunar_benigno,0
+HAM_0004596,ISIC_0027187,mel,histo,65.0,male,upper extremity,melanoma,1
+HAM_0003773,ISIC_0027952,nv,follow_up,30.0,female,lower extremity,lunar_benigno,0
+HAM_0000557,ISIC_0025675,nv,follow_up,50.0,female,upper extremity,lunar_benigno,0
+HAM_0007192,ISIC_0030558,nv,follow_up,35.0,female,upper extremity,lunar_benigno,0
+HAM_0005875,ISIC_0032250,nv,follow_up,45.0,male,back,lunar_benigno,0
+HAM_0001531,ISIC_0024951,mel,histo,70.0,male,back,melanoma,1
+HAM_0001679,ISIC_0027783,nv,histo,50.0,female,abdomen,lunar_benigno,0
+HAM_0007305,ISIC_0029933,mel,histo,45.0,female,upper extremity,melanoma,1
+HAM_0001686,ISIC_0032698,mel,histo,65.0,male,face,melanoma,1
+HAM_0004485,ISIC_0029814,nv,histo,35.0,female,lower extremity,lunar_benigno,0
+HAM_0000201,ISIC_0031408,mel,histo,65.0,male,trunk,melanoma,1
+HAM_0003495,ISIC_0032869,mel,histo,85.0,male,back,melanoma,1
+HAM_0004213,ISIC_0034228,nv,consensus,40.0,female,unknown,lunar_benigno,0
+HAM_0003630,ISIC_0030538,nv,follow_up,65.0,female,upper extremity,lunar_benigno,0
+HAM_0006593,ISIC_0025708,mel,histo,30.0,female,back,melanoma,1
+HAM_0007136,ISIC_0030563,nv,follow_up,40.0,female,back,lunar_benigno,0
+HAM_0007183,ISIC_0030421,nv,follow_up,45.0,female,trunk,lunar_benigno,0
+HAM_0001077,ISIC_0027928,nv,histo,80.0,male,upper extremity,lunar_benigno,0
+HAM_0003932,ISIC_0026151,nv,histo,55.0,male,back,lunar_benigno,0
+HAM_0001596,ISIC_0027071,mel,histo,50.0,female,face,melanoma,1
+HAM_0002115,ISIC_0032408,mel,histo,60.0,female,upper extremity,melanoma,1
+HAM_0000006,ISIC_0032583,mel,histo,70.0,male,back,melanoma,1
+HAM_0002072,ISIC_0027794,nv,follow_up,50.0,male,back,lunar_benigno,0
+HAM_0005434,ISIC_0033457,nv,consensus,55.0,female,trunk,lunar_benigno,0
+HAM_0001428,ISIC_0026268,mel,histo,80.0,male,face,melanoma,1
+HAM_0004932,ISIC_0032212,nv,follow_up,45.0,female,foot,lunar_benigno,0
+HAM_0002477,ISIC_0025145,mel,histo,80.0,female,lower extremity,melanoma,1
+HAM_0006931,ISIC_0024588,nv,follow_up,40.0,male,neck,lunar_benigno,0
+HAM_0002395,ISIC_0029750,nv,follow_up,40.0,female,trunk,lunar_benigno,0
