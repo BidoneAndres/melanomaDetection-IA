@@ -7,7 +7,7 @@ from src.modelo import crear_modelo
 
 RAIZ = Path(__file__).resolve().parents[1]
 MODELO_PATH = RAIZ / "models" / "cnn_resnet18.pt"
-UMBRAL = 0.5
+UMBRAL = 0.7
 
 _modelo = None
 
