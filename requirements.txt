@@ -1,9 +1,5 @@
-numpy
-pandas
-scikit-learn
-opencv-python-headless
-matplotlib
-jupyter
-ipykernel
-tqdm
-Pillow
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0+cpu
+torchvision==0.29.2+cpu
+pillow==13.0.0
+numpy==2.4.6
