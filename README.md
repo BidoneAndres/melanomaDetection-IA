@@ -52,6 +52,7 @@ Para esta ocasión nos centraremos principalmente en la deteccion del  melanoma,
 ### 4.2. Funciones fuera del alcance de la primera entrega
 
 Si bien la funcion principal del sistema busca ayudar con la clasificacion de las diferentes lesiones cutaneas. En este caso solo se tendra en cuenta la deteccion de una lesion en particular.
+El problema principal del modelo, es que al estar entrenado con imagenes dermatoscopicas, este solo valida bien si las imagenes son de ese tipo.
 
 ### 5. Resultados
 
