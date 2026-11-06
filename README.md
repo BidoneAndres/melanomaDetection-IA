@@ -80,41 +80,39 @@ En esta evaluación, la CNN obtuvo valores más altos de recall y F1 macro, y re
 
 ## Preparar el entorno con Docker
 
-Se necesita Docker con Docker Compose. 
-
-Construir la imagen e iniciar Jupyter:
-
-```bash
-docker compose up --build
-```
-
-Abrir [http://localhost:8888](http://localhost:8888). Si Jupyter solicita un token, usar el enlace con token que aparece en la salida del comando. Para detener el contenedor, presionar `Ctrl+C` y luego ejecutar:
-
-```bash
-docker compose down
-```
-
-La imagen usa Python 3.11 y las versiones fijadas en `requirements.txt`. Está configurada para CPU y usa `opencv-python-headless`, por lo que no necesita bibliotecas gráficas del sistema. Los datos, modelos y notebooks se montan desde las carpetas del proyecto y no se copian dentro de la imagen.
+Se necesita Docker con Docker Compose. No hace falta iniciar Jupyter para clasificar una imagen.
 
 ## Clasificar una imagen
 
-El modelo está diseñado para analizar imágenes dermatoscópicas, similares a las del conjunto HAM10000. No se ha evaluado con fotografías comunes ni con imágenes de otras fuentes. Colocar la imagen de entrada dentro de `imagenesProbar/` y, desde la carpeta raíz, ejecutar:
+El modelo está diseñado para analizar imágenes dermatoscópicas, similares a las del conjunto HAM10000. Para tener una imagen de referencia coloque imagenes en la carpeta **imagenesProbar**
 
 ```bash
-docker compose run --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg
+docker compose run --build --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg
 ```
 
 El programa imprime un resultado JSON con el nombre del archivo, la probabilidad estimada de melanoma, la etiqueta asignada y el umbral utilizado. Para guardar una copia etiquetada en `imagenesProbar/`:
 
 ```bash
-docker compose run --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg --guardar /app/imagenesProbar/prediccion.jpg
+docker compose run --build --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg --guardar /app/imagenesProbar/prediccion.jpg
 ```
 
-La inferencia utiliza el modelo guardado en `models/cnn_resnet18.pt` y el umbral configurado en `src/inferencia.py`. La probabilidad es una salida del modelo y no debe interpretarse como un diagnóstico médico.
+La inferencia utiliza el modelo guardado en `models/cnn_resnet18.pt` y el umbral configurado en `src/inferencia.py`.
 
 ## Reproducir el flujo de trabajo
 
-Iniciar Docker con `docker compose up --build`, abrir Jupyter y ejecutar los notebooks en este orden:
+Para usar los notebooks, construir la imagen e iniciar Jupyter en segundo plano:
+
+```bash
+docker compose up --build -d
+```
+
+Consultar el token de acceso:
+
+```bash
+docker compose logs app
+```
+
+Abrir http://localhost:8888 y, si Jupyter lo solicita, ingresar el token que aparece en los logs. Ejecutar los notebooks en este orden:
 
 1. `01-FiltradoYBalanceoDeDatos.ipynb`: filtra HAM10000, conserva las clases de nevo y melanoma y prepara los datos balanceados en `data/processed/`.
 2. `02-SplitEnTrainYTest.ipynb`: crea las particiones de entrenamiento y prueba.
@@ -125,5 +123,13 @@ Iniciar Docker con `docker compose up --build`, abrir Jupyter y ejecutar los not
 7. `08-EntrenamientoCNN.ipynb`: entrena la CNN y guarda el modelo en `models/cnn_resnet18.pt`.
 8. `09-EvaluacionYComparacion.ipynb`: selecciona el umbral usando validación y compara los modelos sobre el conjunto de prueba.
 
-Para reproducir el entrenamiento, además del contenedor se necesitan los archivos originales de HAM10000 en `data/raw/` y `data/raw/images/`. Ejecutar nuevamente los notebooks de preparación puede regenerar los archivos de `data/processed/`; el notebook 02 también vuelve a crear la partición de prueba.
+Para reproducir el entrenamiento, además del contenedor se necesitan los archivos originales de HAM10000 en `data/raw/` y `data/raw/images/`. Ejecutar nuevamente los notebooks de preparación puede regenerar los archivos de `data/processed/`.
 
+Para descargar los archivos de HAM10000 visite el siguiente link: https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000?resource=download
+Las imagenes se deben de unificar en una carpeta llamada `images`.
+
+Al terminar, detener Jupyter y el contenedor:
+
+```bash
+docker compose down
+```
