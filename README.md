@@ -78,66 +78,43 @@ En esta evaluación, la CNN obtuvo valores más altos de recall y F1 macro, y re
 * HAM10000: el archivo **HAM10000_metadata.csv** y las imágenes originales deben estar en **data/raw/**  y **data/raw/images/`**, respectivamente.
 * Para ejecutar la inferencia se necesita el modelo **models/cnn_resnet18.pt**.
 
-## Preparar el entorno
+## Preparar el entorno con Docker
 
-Se recomienda Python 3.11. Los comandos siguientes deben ejecutarse desde la carpeta raíz del proyecto.
+Se necesita Docker con Docker Compose. 
 
-### Windows (PowerShell)
-
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-```
-
-### Ubuntu
-
-Se necesita tener instalado Python 3.11 y el módulo `venv`.
+Construir la imagen e iniciar Jupyter:
 
 ```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
+docker compose up --build
 ```
 
-### Instalar PyTorch y las dependencias comunes
-
-Primero, instalar `torch` y `torchvision` con el comando recomendado para el sistema operativo y el tipo de hardware (CPU o GPU) desde el [selector oficial de instalación de PyTorch](https://pytorch.org/get-started/locally/). Con el entorno virtual activado, instalar después las dependencias comunes del proyecto:
+Abrir [http://localhost:8888](http://localhost:8888). Si Jupyter solicita un token, usar el enlace con token que aparece en la salida del comando. Para detener el contenedor, presionar `Ctrl+C` y luego ejecutar:
 
 ```bash
-python -m pip install -r requirements.txt
+docker compose down
 ```
 
-`requirements.txt` contiene las dependencias comunes a Windows y Ubuntu, excepto PyTorch, cuya instalación puede variar según la plataforma. Las versiones de las dependencias comunes no están fijadas, por lo que instalaciones realizadas en fechas distintas podrían recibir versiones diferentes.
+La imagen usa Python 3.11 y las versiones fijadas en `requirements.txt`. Está configurada para CPU y usa `opencv-python-headless`, por lo que no necesita bibliotecas gráficas del sistema. Los datos, modelos y notebooks se montan desde las carpetas del proyecto y no se copian dentro de la imagen.
 
 ## Clasificar una imagen
 
-Una de las limitaciones de este modelo es que está diseñado para analizar imágenes dermatoscópicas, ya que fue entrenado con imágenes de ese tipo del conjunto HAM10000. Se deja disponibles imagenes para probar una imagen dermatoscopica que no pertenece a este conjunto.
-Con el entorno virtual activado y desde la carpeta raíz, ejecutar:
+El modelo está diseñado para analizar imágenes dermatoscópicas, similares a las del conjunto HAM10000. No se ha evaluado con fotografías comunes ni con imágenes de otras fuentes. Colocar la imagen de entrada dentro de `imagenesProbar/` y, desde la carpeta raíz, ejecutar:
 
 ```bash
-python -m src.predecir "ruta de la imagen" 
+docker compose run --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg
 ```
 
-El programa imprime un resultado JSON con el nombre del archivo, la probabilidad estimada de melanoma, la etiqueta asignada y el umbral utilizado. Para guardar una copia de la imagen con la etiqueta:
-
+El programa imprime un resultado JSON con el nombre del archivo, la probabilidad estimada de melanoma, la etiqueta asignada y el umbral utilizado. Para guardar una copia etiquetada en `imagenesProbar/`:
 
 ```bash
-python -m src.predecir "ruta de la imagen" --guardar "ruta donde se va a guardar"
+docker compose run --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg --guardar /app/imagenesProbar/prediccion.jpg
 ```
 
 La inferencia utiliza el modelo guardado en `models/cnn_resnet18.pt` y el umbral configurado en `src/inferencia.py`. La probabilidad es una salida del modelo y no debe interpretarse como un diagnóstico médico.
 
 ## Reproducir el flujo de trabajo
 
-Con el entorno virtual activado, cambiar a la carpeta `notebooks` e iniciar Jupyter. Esto permite que las rutas relativas usadas en los notebooks apunten a `data/` y `src/` en la carpeta raíz.
-
-```bash
-cd notebooks
-jupyter notebook
-```
-
-Ejecutar los notebooks en este orden:
+Iniciar Docker con `docker compose up --build`, abrir Jupyter y ejecutar los notebooks en este orden:
 
 1. `01-FiltradoYBalanceoDeDatos.ipynb`: filtra HAM10000, conserva las clases de nevo y melanoma y prepara los datos balanceados en `data/processed/`.
 2. `02-SplitEnTrainYTest.ipynb`: crea las particiones de entrenamiento y prueba.
@@ -148,4 +125,5 @@ Ejecutar los notebooks en este orden:
 7. `08-EntrenamientoCNN.ipynb`: entrena la CNN y guarda el modelo en `models/cnn_resnet18.pt`.
 8. `09-EvaluacionYComparacion.ipynb`: selecciona el umbral usando validación y compara los modelos sobre el conjunto de prueba.
 
-Ejecutar nuevamente los notebooks de preparación puede regenerar los archivos de `data/processed/`; el notebook 02 también vuelve a crear la partición de prueba.
+Para reproducir el entrenamiento, además del contenedor se necesitan los archivos originales de HAM10000 en `data/raw/` y `data/raw/images/`. Ejecutar nuevamente los notebooks de preparación puede regenerar los archivos de `data/processed/`; el notebook 02 también vuelve a crear la partición de prueba.
+
