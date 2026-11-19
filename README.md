@@ -137,7 +137,7 @@ Se guarda el checkpoint con menor pérdida de validación. Se eligió ResNet18 p
 
 ### Validación
 
-- Split train/test 80/20 estratificado; el test no se usa para seleccionar modelos ni umbrales.
+- Split train/test 80/20 estratificado el test no se usa para seleccionar modelos ni umbrales.
 - Baseline: validación cruzada de 5 particiones en las 982 imágenes de train (notebook 06). Para la comparación final, se entrenó con las mismas 785 imágenes que la CNN.
 - CNN: 20 % de train (197 imágenes) como validación para parada temprana y selección de umbral. Esa misma validación se usó para el baseline comparativo.
 - **Umbral de decisión de ambos modelos:** se usó la misma grilla (0,4 a 0,8, en pasos de 0,1) y el mismo criterio: entre los umbrales con recall de melanoma ≥ 0,85, elegir el de mayor F1 macro. Resultado: 0,7 para la CNN y 0,5 para el baseline.
@@ -203,7 +203,7 @@ Bootstrap pareado de la diferencia (`class_weight` menos submuestreo):
 | Recall de melanoma | 0,020 | [-0,043; 0,083] |
 | F1 macro | 0,024 | [0,0003; 0,048] |
 
-El IC del recall incluye cero; el de F1 macro apenas queda por encima. La validación se usó para parada temprana y selección de umbral, por lo que estos resultados son exploratorios y no confirman superioridad. Tampoco se comparan directamente con las métricas de la CNN original, que se obtuvieron en otra partición.
+El IC del recall incluye cero el de F1 macro apenas queda por encima. La validación se usó para parada temprana y selección de umbral, por lo que estos resultados son exploratorios y no confirman superioridad. Tampoco se comparan directamente con las métricas de la CNN original, que se obtuvieron en otra partición.
 
 ### Subgrupos y ablación
 
@@ -216,9 +216,9 @@ Se evaluaron los dos modelos experimentales en subgrupos de edad usando los umbr
 | Submuestreo | <50 | 25/554 | 0,680 | 0,856 | 0,597 |
 | Submuestreo | ≥50 | 72/495 | 0,917 | 0,830 | 0,748 |
 
-En esta validación el recall fue menor para menores de 50 años en ambos modelos; este resultado es descriptivo y no demuestra que la edad cause la diferencia.
+En esta validación el recall fue menor para menores de 50 años en ambos modelos este resultado es descriptivo y no demuestra que la edad cause la diferencia.
 
-La fuente del diagnóstico quedó confundida con la clase: **los 98 melanomas son histopatológicos**, mientras que seguimiento y consenso solo contienen nevos. Por eso, recall y F1 no se pueden estimar para esos dos últimos grupos; allí se informa únicamente la especificidad de nevos:
+La fuente del diagnóstico quedó confundida con la clase: **los 98 melanomas son histopatológicos**, mientras que seguimiento y consenso solo contienen nevos. Por eso, recall y F1 no se pueden estimar para esos dos últimos grupos allí se informa únicamente la especificidad de nevos:
 
 | Modelo | Fuente | Melanomas/nevos | Recall melanoma | Especificidad nevo | F1 macro |
 |---|---|---:|---:|---:|---:|
@@ -231,7 +231,7 @@ La fuente del diagnóstico quedó confundida con la clase: **los 98 melanomas so
 
 Esta composición impide descartar que la fuente del diagnóstico esté asociada a la clase en estos datos.
 
-Para la ablación del baseline se entrenaron Random Forest con características de forma, de color y ambas, usando 785 imágenes de train y 197 de validación. El test no se usó. Se aplicó la misma regla de selección de umbral; para forma no hubo umbral que alcanzara recall ≥ 0,85, así que se muestra su resultado con umbral 0,5:
+Para la ablación del baseline se entrenaron Random Forest con características de forma, de color y ambas, usando 785 imágenes de train y 197 de validación. El test no se usó. Se aplicó la misma regla de selección de umbral, para forma no hubo umbral que alcanzara recall ≥ 0,85, así que se muestra su resultado con umbral 0,5:
 
 | Características | Umbral | Recall melanoma | F1 macro | Especificidad | Falsos negativos | Falsos positivos |
 |---|---:|---:|---:|---:|---:|---:|
@@ -252,15 +252,15 @@ Las características del baseline se regeneraron con el pipeline final antes de 
 **Limitaciones:**
 
 - Test de 246 imágenes (123 melanomas): los resultados tienen un margen de error de varios puntos.
-- El submuestreo produjo un test balanceado que no refleja la prevalencia poblacional; el VPP ajustado al 10 % es una estimación y depende de que sensibilidad y especificidad se mantengan.
-- La comparación entre `class_weight` y submuestreo comparte validación, pero esta se usó para parada temprana y selección de umbral; los resultados son exploratorios, no una evaluación independiente.
+- El submuestreo produjo un test balanceado que no refleja la prevalencia poblacional el VPP ajustado al 10 % es una estimación y depende de que sensibilidad y especificidad se mantengan.
+- La comparación entre `class_weight` y submuestreo comparte validación, pero esta se usó para parada temprana y selección de umbral los resultados son exploratorios, no una evaluación independiente.
 - En HAM10000, la fuente histopatológica aparece en todos los melanomas de la validación; no hay melanomas de seguimiento o consenso para una comparación equivalente por fuente.
 - Los análisis por edad y la ablación usan validaciones pequeñas y no sustituyen una evaluación independiente.
-- No se realizó una evaluación con imágenes de una fuente externa; queda fuera del alcance acordado para esta etapa.
+- No se realizó una evaluación con imágenes de una fuente externa queda fuera del alcance acordado para esta etapa.
 - El filtro por `lesion_id` único elimina las lesiones con varias fotos, que suelen ser las más dudosas, por lo que probablemente simplifica el problema.
 - Posible dependencia del color en el baseline (ver análisis crítico).
 - El modelo solo es válido para imágenes dermatoscópicas similares a las de HAM10000; no generaliza a fotos comunes.
-- Para esta comparación ambos modelos se entrenaron con 785 imágenes; la validación cruzada descriptiva del notebook 06 usa las 982 imágenes de train.
+- Para esta comparación ambos modelos se entrenaron con 785 imágenes la validación cruzada descriptiva del notebook 06 usa las 982 imágenes de train.
 - La segmentación se evaluó visualmente, sin máscaras de referencia.
 - Los resultados pueden variar levemente entre sistemas por diferencias numéricas de las librerías, aun con semillas fijas.
 - La probabilidad es una salida del modelo y **no es un diagnóstico médico**.
