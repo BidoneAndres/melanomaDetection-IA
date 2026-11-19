@@ -1,0 +1,97 @@
+{
+  "experimento": "class_weight vs. submuestreo",
+  "evaluacion": "validacion exploratoria; test anterior excluido",
+  "semilla": 42,
+  "lesiones_test_anterior_excluidas": 246,
+  "entrenamiento": {
+    "class_weight": {
+      "imagenes": 4616,
+      "melanomas": 393,
+      "nevos": 4223
+    },
+    "submuestreo": {
+      "imagenes": 786,
+      "melanomas": 393,
+      "nevos": 393
+    }
+  },
+  "validacion": {
+    "imagenes": 1155,
+    "prevalencia_melanoma": 0.08484848484848485
+  },
+  "regla_umbral": {
+    "grilla": [
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8
+    ],
+    "recall_minimo": 0.85,
+    "criterio": "mayor F1 macro entre umbrales elegibles"
+  },
+  "resultados": {
+    "class_weight": {
+      "umbral": 0.5,
+      "accuracy": 0.8623376623376623,
+      "precision_melanoma": 0.36909871244635195,
+      "recall_melanoma": 0.8775510204081632,
+      "especificidad": 0.8609271523178808,
+      "ppv_estimado_prevalencia_10pct": 0.4121492954170369,
+      "f1_macro": 0.7196469271764403,
+      "falsos_positivos": 147,
+      "falsos_negativos": 12,
+      "matriz_confusion": [
+        [
+          910,
+          147
+        ],
+        [
+          12,
+          86
+        ]
+      ]
+    },
+    "submuestreo": {
+      "umbral": 0.6,
+      "accuracy": 0.8441558441558441,
+      "precision_melanoma": 0.336,
+      "recall_melanoma": 0.8571428571428571,
+      "especificidad": 0.8429517502365185,
+      "ppv_estimado_prevalencia_10pct": 0.3775,
+      "f1_macro": 0.6955077507118,
+      "falsos_positivos": 166,
+      "falsos_negativos": 14,
+      "matriz_confusion": [
+        [
+          891,
+          166
+        ],
+        [
+          14,
+          84
+        ]
+      ]
+    }
+  },
+  "bootstrap_pareado_2000": {
+    "recall_melanoma": {
+      "diferencia_observada_class_weight_menos_submuestreo": 0.020408163265306145,
+      "ic95_pareado": [
+        -0.043010752688172005,
+        0.08333333333333337
+      ]
+    },
+    "f1_macro": {
+      "diferencia_observada_class_weight_menos_submuestreo": 0.024139176464640255,
+      "ic95_pareado": [
+        0.00031779813023489486,
+        0.04811798183858289
+      ]
+    }
+  },
+  "checkpoints": {
+    "class_weight": "models\\cnn_resnet18_class_weight.pt",
+    "submuestreo": "models\\cnn_resnet18_subsampled_control.pt"
+  }
+}

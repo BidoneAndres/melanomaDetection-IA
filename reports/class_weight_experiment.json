@@ -1,0 +1,209 @@
+{
+  "experimento": "ResNet18 con class_weight",
+  "evaluacion": "validacion exploratoria; se excluyo el test anterior",
+  "semilla": 42,
+  "test_anterior_excluido": true,
+  "tamano_test_anterior_excluido": 246,
+  "entrenamiento": {
+    "imagenes": 4616,
+    "melanomas": 393,
+    "nevos": 4223,
+    "pos_weight": 10.7455472946167
+  },
+  "validacion": {
+    "imagenes": 1155,
+    "prevalencia_melanoma": 0.08484848484848485,
+    "metricas_umbral_0_5": {
+      "umbral": 0.5,
+      "accuracy": 0.8623376623376623,
+      "precision_melanoma": 0.36909871244635195,
+      "recall_melanoma": 0.8775510204081632,
+      "especificidad": 0.8609271523178808,
+      "ppv_estimado_prevalencia_10pct": 0.4121492954170369,
+      "f1_macro": 0.7196469271764403,
+      "falsos_positivos": 147,
+      "falsos_negativos": 12,
+      "matriz_confusion": [
+        [
+          910,
+          147
+        ],
+        [
+          12,
+          86
+        ]
+      ]
+    },
+    "metricas_umbral_seleccionado": {
+      "umbral": 0.5,
+      "accuracy": 0.8623376623376623,
+      "precision_melanoma": 0.36909871244635195,
+      "recall_melanoma": 0.8775510204081632,
+      "especificidad": 0.8609271523178808,
+      "ppv_estimado_prevalencia_10pct": 0.4121492954170369,
+      "f1_macro": 0.7196469271764403,
+      "falsos_positivos": 147,
+      "falsos_negativos": 12,
+      "matriz_confusion": [
+        [
+          910,
+          147
+        ],
+        [
+          12,
+          86
+        ]
+      ]
+    }
+  },
+  "regla_umbral": {
+    "grilla": [
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8
+    ],
+    "recall_minimo": 0.85,
+    "criterio": "mayor F1 macro entre umbrales elegibles"
+  },
+  "historial": [
+    {
+      "fase": 1,
+      "epoca": 1,
+      "loss_train": 0.8990214302800144,
+      "loss": 0.8612924395959615,
+      "recall": 0.9693877551020408,
+      "f1_macro": 0.5613377690039238
+    },
+    {
+      "fase": 1,
+      "epoca": 2,
+      "loss_train": 0.7227956735282052,
+      "loss": 0.8105618662906415,
+      "recall": 0.9591836734693877,
+      "f1_macro": 0.5799538215617784
+    },
+    {
+      "fase": 1,
+      "epoca": 3,
+      "loss_train": 0.6775177625271022,
+      "loss": 0.6688091705500822,
+      "recall": 0.8877551020408163,
+      "f1_macro": 0.6350141086983192
+    },
+    {
+      "fase": 1,
+      "epoca": 4,
+      "loss_train": 0.6557507907497201,
+      "loss": 0.6707692414651185,
+      "recall": 0.9081632653061225,
+      "f1_macro": 0.6239126726931605
+    },
+    {
+      "fase": 1,
+      "epoca": 5,
+      "loss_train": 0.657200863394415,
+      "loss": 0.6563644196047927,
+      "recall": 0.8877551020408163,
+      "f1_macro": 0.6357896252743651
+    },
+    {
+      "fase": 1,
+      "epoca": 6,
+      "loss_train": 0.6403272883317707,
+      "loss": 0.6695152226464572,
+      "recall": 0.8979591836734694,
+      "f1_macro": 0.630172309887517
+    },
+    {
+      "fase": 1,
+      "epoca": 7,
+      "loss_train": 0.629424290495894,
+      "loss": 0.6808202667282773,
+      "recall": 0.9183673469387755,
+      "f1_macro": 0.6236782085838689
+    },
+    {
+      "fase": 1,
+      "epoca": 8,
+      "loss_train": 0.64853992877428,
+      "loss": 0.6593325608607494,
+      "recall": 0.9183673469387755,
+      "f1_macro": 0.6381189233646324
+    },
+    {
+      "fase": 2,
+      "epoca": 1,
+      "loss_train": 0.7043355648604381,
+      "loss": 0.6595621024117325,
+      "recall": 0.9285714285714286,
+      "f1_macro": 0.6219507759954668
+    },
+    {
+      "fase": 2,
+      "epoca": 2,
+      "loss_train": 0.551250576921311,
+      "loss": 0.6034459767274526,
+      "recall": 0.8877551020408163,
+      "f1_macro": 0.6755794927733842
+    },
+    {
+      "fase": 2,
+      "epoca": 3,
+      "loss_train": 0.47608381143062534,
+      "loss": 0.5732082301662081,
+      "recall": 0.8877551020408163,
+      "f1_macro": 0.6920768715895038
+    },
+    {
+      "fase": 2,
+      "epoca": 4,
+      "loss_train": 0.4700341509781016,
+      "loss": 0.6445884967843691,
+      "recall": 0.7551020408163265,
+      "f1_macro": 0.7391299671604549
+    },
+    {
+      "fase": 2,
+      "epoca": 5,
+      "loss_train": 0.47757163710982586,
+      "loss": 0.5396365665254139,
+      "recall": 0.8775510204081632,
+      "f1_macro": 0.7196469271764403
+    },
+    {
+      "fase": 2,
+      "epoca": 6,
+      "loss_train": 0.4057005957879475,
+      "loss": 0.6180499529941773,
+      "recall": 0.8571428571428571,
+      "f1_macro": 0.6994251106011498
+    },
+    {
+      "fase": 2,
+      "epoca": 7,
+      "loss_train": 0.37802254358238735,
+      "loss": 0.6155502474153197,
+      "recall": 0.7857142857142857,
+      "f1_macro": 0.7083187896198904
+    },
+    {
+      "fase": 2,
+      "epoca": 8,
+      "loss_train": 0.3738658458665917,
+      "loss": 0.5734269069515782,
+      "recall": 0.8367346938775511,
+      "f1_macro": 0.7235713465146854
+    },
+    {
+      "fase": 2,
+      "epoca": 9,
+      "loss_train": 0.3514928282133628,
+      "loss": 0.6271392205834905,
+      "recall": 0.826530612244898,
+      "f1_macro": 0.683469387755102
+    }
+  ],
+  "checkpoint": "models\\cnn_resnet18_class_weight.pt"
+}

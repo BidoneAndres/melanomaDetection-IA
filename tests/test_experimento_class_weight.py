@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 from PIL import Image
+import torch
 
 from src.dataset import LesionDataset
 from src.experimento_class_weight import (
+    _guardar_checkpoint,
     metricas,
     preparar_particiones,
     subconjunto_balanceado,
@@ -82,3 +84,14 @@ def test_metricas_estima_ppv_a_prevalencia_del_diez_por_ciento():
     assert resultado["recall_melanoma"] == 0.8
     assert resultado["especificidad"] == 0.9
     assert abs(resultado["ppv_estimado_prevalencia_10pct"] - 0.470588) < 1e-5
+
+
+def test_guardar_checkpoint_escribe_estado_en_ruta_separada(tmp_path):
+    ruta = tmp_path / "modelos" / "class_weight.pt"
+    estado = {"peso": torch.tensor([1.0, 2.0])}
+
+    _guardar_checkpoint(estado, ruta)
+
+    guardado = torch.load(ruta, weights_only=True)
+    assert torch.equal(guardado["peso"], estado["peso"])
+    assert not ruta.with_suffix(".pt.tmp").exists()

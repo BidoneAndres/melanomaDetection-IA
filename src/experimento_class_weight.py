@@ -136,6 +136,7 @@ def entrenar_modelo(
     val_df,
     ponderar_clases,
     device,
+    checkpoint_path=None,
     batch_size=32,
     epocas_fase_1=8,
     epocas_fase_2=12,
@@ -178,6 +179,8 @@ def entrenar_modelo(
         if val["loss"] < mejor_loss:
             mejor_loss = val["loss"]
             mejor_estado = copy.deepcopy(modelo.state_dict())
+            if checkpoint_path is not None:
+                _guardar_checkpoint(mejor_estado, checkpoint_path)
 
     modelo.load_state_dict(mejor_estado)
     descongelar_ultimo_bloque(modelo)
@@ -201,6 +204,8 @@ def entrenar_modelo(
         if val["loss"] < mejor_loss:
             mejor_loss = val["loss"]
             mejor_estado = copy.deepcopy(modelo.state_dict())
+            if checkpoint_path is not None:
+                _guardar_checkpoint(mejor_estado, checkpoint_path)
             sin_mejora = 0
         else:
             sin_mejora += 1
@@ -217,6 +222,14 @@ def entrenar_modelo(
         "historial": historial,
         "pos_weight": float(pos_weight.item()) if pos_weight is not None else None,
     }
+
+
+def _guardar_checkpoint(estado, ruta):
+    ruta = Path(ruta)
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    temporal = ruta.with_suffix(ruta.suffix + ".tmp")
+    torch.save(estado, temporal)
+    temporal.replace(ruta)
 
 
 def ejecutar_experimento():

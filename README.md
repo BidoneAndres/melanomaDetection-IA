@@ -92,8 +92,7 @@ Se comparan dos enfoques: un baseline tradicional (Random Forest sobre caracter�
 **Decisiones sobre los datos:**
 
 - Se conservaron solo las lesiones con **una única imagen** (`lesion_id` único), para evitar que fotos de la misma lesión caigan en train y test (fuga de datos).
-- Se balanceó por submuestreo **después** de filtrar. Esto descartó cerca del 80 % de los nevos disponibles y dejó una prevalencia artificial de melanoma del 50 %; por eso, las métricas de precisión del test balanceado no representan directamente una población real.
-- No se comparó este enfoque con entrenamiento sobre los datos desbalanceados usando `class_weight`; esa alternativa queda como trabajo futuro.
+- En el experimento original se balanceó por submuestreo **después** de filtrar. Esto descartó cerca del 80 % de los nevos disponibles y dejó una prevalencia artificial de melanoma del 50 %; por eso, las métricas de precisión del test balanceado no representan directamente una población real.
 - La partición train/test se hizo antes de cualquier preprocesamiento, de forma estratificada.
 
 **Volumen final:** 1228 imágenes (614 por clase).
@@ -186,9 +185,65 @@ El test tiene prevalencia de melanoma del 50 %, mientras que una prevalencia de 
 
 Estos VPP son **estimaciones ajustadas**, no resultados medidos en una muestra con prevalencia real. Los falsos positivos reportados arriba son conteos sobre los 123 nevos del test balanceado, no una estimación directa de la cantidad esperable en una población. El cálculo no reemplaza una evaluación externa con prevalencia representativa.
 
+### Experimento exploratorio con `class_weight`
+
+Se compararon dos ResNet18, una con `class_weight` (`pos_weight = 10,746`) y otra entrenada con submuestreo. Ambas usaron la misma validación de 1155 imágenes (8,5 % de melanomas). Se excluyeron por `lesion_id` las 246 lesiones del test consultado anteriormente; ese test no se evaluó. El entrenamiento ponderado usó 4616 imágenes (393 melanomas y 4223 nevos), mientras que el control submuestreado usó 786 (393 de cada clase).
+
+Para cada modelo se seleccionó el umbral con la misma regla: en la grilla [0,4; 0,5; 0,6; 0,7; 0,8], elegir el de mayor F1 macro entre los que alcanzan recall de melanoma ≥ 0,85. Los umbrales elegidos fueron 0,5 para `class_weight` y 0,6 para el submuestreo:
+
+| Modelo | Umbral | Recall melanoma | F1 macro | Especificidad | VPP estimado al 10 % | Falsos negativos | Falsos positivos |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `class_weight` | 0,5 | 0,878 | 0,720 | 0,861 | 41,2 % | 12 | 147 |
+| Submuestreo | 0,6 | 0,857 | 0,696 | 0,843 | 37,8 % | 14 | 166 |
+
+Bootstrap pareado de la diferencia (`class_weight` menos submuestreo):
+
+| Métrica | Diferencia observada | IC 95 % pareado |
+|---|---:|---:|
+| Recall de melanoma | 0,020 | [-0,043; 0,083] |
+| F1 macro | 0,024 | [0,0003; 0,048] |
+
+El IC del recall incluye cero; el de F1 macro apenas queda por encima. La validación se usó para parada temprana y selección de umbral, por lo que estos resultados son exploratorios y no confirman superioridad. Tampoco se comparan directamente con las métricas de la CNN original, que se obtuvieron en otra partición.
+
+### Subgrupos y ablación
+
+Se evaluaron los dos modelos experimentales en subgrupos de edad usando los umbrales globales seleccionados. Se excluyeron las 9 lesiones sin edad. Los tamaños pequeños, especialmente en melanomas menores de 50 años, limitan la interpretación:
+
+| Modelo | Edad | Melanomas/nevos | Recall melanoma | Especificidad nevo | F1 macro |
+|---|---|---:|---:|---:|---:|
+| `class_weight` | <50 | 25/554 | 0,800 | 0,888 | 0,655 |
+| `class_weight` | ≥50 | 72/495 | 0,903 | 0,832 | 0,746 |
+| Submuestreo | <50 | 25/554 | 0,680 | 0,856 | 0,597 |
+| Submuestreo | ≥50 | 72/495 | 0,917 | 0,830 | 0,748 |
+
+En esta validación el recall fue menor para menores de 50 años en ambos modelos; este resultado es descriptivo y no demuestra que la edad cause la diferencia.
+
+La fuente del diagnóstico quedó confundida con la clase: **los 98 melanomas son histopatológicos**, mientras que seguimiento y consenso solo contienen nevos. Por eso, recall y F1 no se pueden estimar para esos dos últimos grupos; allí se informa únicamente la especificidad de nevos:
+
+| Modelo | Fuente | Melanomas/nevos | Recall melanoma | Especificidad nevo | F1 macro |
+|---|---|---:|---:|---:|---:|
+| `class_weight` | Histopatología | 98/260 | 0,878 | 0,550 | 0,630 |
+| `class_weight` | Seguimiento | 0/726 | — | 0,989 | — |
+| `class_weight` | Consenso | 0/71 | — | 0,690 | — |
+| Submuestreo | Histopatología | 98/260 | 0,857 | 0,477 | 0,576 |
+| Submuestreo | Seguimiento | 0/726 | — | 0,996 | — |
+| Submuestreo | Consenso | 0/71 | — | 0,620 | — |
+
+Esta composición impide descartar que la fuente del diagnóstico esté asociada a la clase en estos datos.
+
+Para la ablación del baseline se entrenaron Random Forest con características de forma, de color y ambas, usando 785 imágenes de train y 197 de validación. El test no se usó. Se aplicó la misma regla de selección de umbral; para forma no hubo umbral que alcanzara recall ≥ 0,85, así que se muestra su resultado con umbral 0,5:
+
+| Características | Umbral | Recall melanoma | F1 macro | Especificidad | Falsos negativos | Falsos positivos |
+|---|---:|---:|---:|---:|---:|---:|
+| Solo forma (6) | 0,5 (referencia) | 0,561 | 0,632 | 0,707 | 43 | 29 |
+| Solo color (12) | 0,6 | 0,857 | 0,786 | 0,717 | 14 | 28 |
+| Forma y color (18) | 0,5 | 0,898 | 0,795 | 0,697 | 10 | 30 |
+
+En esta validación las características de color rindieron mejor que las de forma por sí solas. Combinar forma y color elevó el recall, pero no la especificidad. Son resultados exploratorios de una única partición y no prueban causalidad ni generalización.
+
 Las características del baseline se regeneraron con el pipeline final antes de esta comparación. Debido a la evaluación previa del test, los nuevos resultados se reportan como exploratorios.
 
-**Análisis crítico:** el baseline depende mucho del color (la característica más importante del Random Forest es `lab2_media`), lo que podría reflejar una pista de la cámara o la iluminación y no de la lesión. La CNN muestra un comportamiento más equilibrado, pero no se verificó en qué se apoya. Con más tiempo se haría un análisis de ablación (solo forma y solo color), se compararían otras arquitecturas y se probaría con una fuente de imágenes distinta a HAM10000.
+**Análisis crítico:** el baseline depende mucho del color (la característica más importante del Random Forest es `lab2_media`), lo que podría reflejar una pista de la cámara o la iluminación y no de la lesión; la ablación es consistente con esa posibilidad, pero no la confirma. La CNN muestra un comportamiento más equilibrado, aunque no se verificó en qué se apoya.
 
 ---
 
@@ -198,7 +253,10 @@ Las características del baseline se regeneraron con el pipeline final antes de 
 
 - Test de 246 imágenes (123 melanomas): los resultados tienen un margen de error de varios puntos.
 - El submuestreo produjo un test balanceado que no refleja la prevalencia poblacional; el VPP ajustado al 10 % es una estimación y depende de que sensibilidad y especificidad se mantengan.
-- No se evaluó el uso de `class_weight` conservando los nevos disponibles; sería una alternativa para un experimento futuro con una partición de evaluación independiente y representativa.
+- La comparación entre `class_weight` y submuestreo comparte validación, pero esta se usó para parada temprana y selección de umbral; los resultados son exploratorios, no una evaluación independiente.
+- En HAM10000, la fuente histopatológica aparece en todos los melanomas de la validación; no hay melanomas de seguimiento o consenso para una comparación equivalente por fuente.
+- Los análisis por edad y la ablación usan validaciones pequeñas y no sustituyen una evaluación independiente.
+- No se realizó una evaluación con imágenes de una fuente externa; queda fuera del alcance acordado para esta etapa.
 - El filtro por `lesion_id` único elimina las lesiones con varias fotos, que suelen ser las más dudosas, por lo que probablemente simplifica el problema.
 - Posible dependencia del color en el baseline (ver análisis crítico).
 - El modelo solo es válido para imágenes dermatoscópicas similares a las de HAM10000; no generaliza a fotos comunes.
@@ -235,7 +293,7 @@ Las características del baseline se regeneraron con el pipeline final antes de 
 │   ├── predecir.py           # script de consola
 │   ├── division.py           # partición estratificada train/test
 │   └── utils.py              # semillas
-├── notebooks/                # exploración y experimentos (01 a 09)
+├── notebooks/                # exploración y experimentos (01 a 12)
 ├── tests/                    # pruebas del split y la inferencia
 ├── data/                     # imágenes y características generadas, excluidas de Git
 │   ├── raw/                  # HAM10000_metadata.csv versionado
@@ -253,6 +311,7 @@ Las características del baseline se regeneraron con el pipeline final antes de 
 - [Docker](https://docs.docker.com/get-docker/) con Docker Compose
 - Git
 - El checkpoint `models/cnn_resnet18.pt` está incluido en el repositorio para permitir la inferencia sin reentrenar. El notebook 08 permite volver a generarlo.
+- El notebook 10 entrena una variante experimental con `class_weight` y guarda un checkpoint separado (`models/cnn_resnet18_class_weight.pt`); no reemplaza el modelo usado por inferencia.
 - Para reproducir el flujo completo, descargar y extraer HAM10000 desde [Kaggle](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000?resource=download). Dejar `HAM10000_metadata.csv` en `data/raw/` y copiar las imágenes de `HAM10000_images_part_1/` y `HAM10000_images_part_2/` a una única carpeta `data/raw/images/`, conservando los nombres originales.
 
 ### Pasos
@@ -337,6 +396,9 @@ Abrir http://localhost:8888 e ingresar el token que aparece en los logs. Ejecuta
 6. `07-DataSetRed.ipynb`: prepara las particiones de entrenamiento y validación de la CNN.
 7. `08-EntrenamientoCNN.ipynb`: entrena la CNN y guarda `models/cnn_resnet18.pt`.
 8. `09-EvaluacionYComparacion.ipynb`: elige el umbral con validación y compara los modelos en test.
+9. `10-Mejoras.ipynb` (experimento opcional): entrena la variante con `class_weight` y guarda un checkpoint separado. Usa una partición distinta, excluye el test anterior y no reemplaza el modelo de inferencia.
+10. `11-ComparacionClassWeight.ipynb`: compara `class_weight` con el control submuestreado en la misma validación; reutiliza el checkpoint del notebook 10 y guarda el control y el reporte de la comparación.
+11. `12-SubgruposYAblacion.ipynb`: analiza los dos modelos por edad y fuente del diagnóstico, y compara el baseline con características de forma, color y ambas; no usa el test.
 
 Ejecutar de nuevo los notebooks de preparación regenera los archivos de `data/processed/`, incluida la partición de prueba. Para detener el contenedor:
 
@@ -352,8 +414,11 @@ docker compose down
 - [ ] Interfaz de usuario y demo publicada en GitHub Pages
 - [x] Pruebas automatizadas básicas con `pytest` para el split y la inferencia
 - [ ] Logging de la aplicación
-- [ ] Análisis de ablación (solo forma y solo color) y comparación con otras arquitecturas
-- [ ] Evaluación con imágenes dermatoscópicas de una fuente distinta a HAM10000
+- [x] Entrenamiento experimental de CNN con `class_weight`
+- [x] Comparación directa entre `class_weight` y submuestreo con las mismas particiones
+- [x] Análisis exploratorio por subgrupos de edad y fuente del diagnóstico
+- [x] Ablación del baseline (solo forma, solo color y ambas)
+- [ ] Comparación con otras arquitecturas
 
 ---
 

@@ -1,0 +1,346 @@
+{
+  "evaluacion": "validaciones exploratorias; no se uso el test",
+  "semilla": 42,
+  "subgrupos_cnn": {
+    "particion": "validacion del experimento class_weight vs submuestreo",
+    "umbrales_globales": {
+      "class_weight": 0.5,
+      "submuestreo": 0.6
+    },
+    "edad_corte": "<50 vs >=50",
+    "edades_faltantes_excluidas": 9,
+    "dx_type_por_clase": {
+      "mel": {
+        "consensus": 0,
+        "follow_up": 0,
+        "histo": 98
+      },
+      "nv": {
+        "consensus": 71,
+        "follow_up": 726,
+        "histo": 260
+      }
+    },
+    "nota_fuente": "todos los melanomas de validacion son histopatologicos; seguimiento y consenso solo contienen nevos",
+    "resultados": [
+      {
+        "modelo": "class_weight",
+        "tipo_grupo": "edad",
+        "grupo": "<50",
+        "n": 579,
+        "n_melanomas": 25,
+        "n_nevos": 554,
+        "umbral_global": 0.5,
+        "recall_melanoma": 0.8,
+        "especificidad_nevo": 0.8880866425992779,
+        "f1_macro": 0.6550414825222085,
+        "falsos_negativos": 5,
+        "falsos_positivos": 62
+      },
+      {
+        "modelo": "class_weight",
+        "tipo_grupo": "edad",
+        "grupo": "≥50",
+        "n": 567,
+        "n_melanomas": 72,
+        "n_nevos": 495,
+        "umbral_global": 0.5,
+        "recall_melanoma": 0.9027777777777778,
+        "especificidad_nevo": 0.8323232323232324,
+        "f1_macro": 0.7462204097871494,
+        "falsos_negativos": 7,
+        "falsos_positivos": 83
+      },
+      {
+        "modelo": "class_weight",
+        "tipo_grupo": "fuente_diagnostico",
+        "grupo": "consensus",
+        "n": 71,
+        "n_melanomas": 0,
+        "n_nevos": 71,
+        "umbral_global": 0.5,
+        "recall_melanoma": null,
+        "especificidad_nevo": 0.6901408450704225,
+        "f1_macro": null,
+        "falsos_negativos": 0,
+        "falsos_positivos": 22
+      },
+      {
+        "modelo": "class_weight",
+        "tipo_grupo": "fuente_diagnostico",
+        "grupo": "follow_up",
+        "n": 726,
+        "n_melanomas": 0,
+        "n_nevos": 726,
+        "umbral_global": 0.5,
+        "recall_melanoma": null,
+        "especificidad_nevo": 0.9889807162534435,
+        "f1_macro": null,
+        "falsos_negativos": 0,
+        "falsos_positivos": 8
+      },
+      {
+        "modelo": "class_weight",
+        "tipo_grupo": "fuente_diagnostico",
+        "grupo": "histo",
+        "n": 358,
+        "n_melanomas": 98,
+        "n_nevos": 260,
+        "umbral_global": 0.5,
+        "recall_melanoma": 0.8775510204081632,
+        "especificidad_nevo": 0.55,
+        "f1_macro": 0.6302925989672977,
+        "falsos_negativos": 12,
+        "falsos_positivos": 117
+      },
+      {
+        "modelo": "submuestreo",
+        "tipo_grupo": "edad",
+        "grupo": "<50",
+        "n": 579,
+        "n_melanomas": 25,
+        "n_nevos": 554,
+        "umbral_global": 0.6,
+        "recall_melanoma": 0.68,
+        "especificidad_nevo": 0.855595667870036,
+        "f1_macro": 0.5968732198240394,
+        "falsos_negativos": 8,
+        "falsos_positivos": 80
+      },
+      {
+        "modelo": "submuestreo",
+        "tipo_grupo": "edad",
+        "grupo": "≥50",
+        "n": 567,
+        "n_melanomas": 72,
+        "n_nevos": 495,
+        "umbral_global": 0.6,
+        "recall_melanoma": 0.9166666666666666,
+        "especificidad_nevo": 0.8303030303030303,
+        "f1_macro": 0.7479551920341394,
+        "falsos_negativos": 6,
+        "falsos_positivos": 84
+      },
+      {
+        "modelo": "submuestreo",
+        "tipo_grupo": "fuente_diagnostico",
+        "grupo": "consensus",
+        "n": 71,
+        "n_melanomas": 0,
+        "n_nevos": 71,
+        "umbral_global": 0.6,
+        "recall_melanoma": null,
+        "especificidad_nevo": 0.6197183098591549,
+        "f1_macro": null,
+        "falsos_negativos": 0,
+        "falsos_positivos": 27
+      },
+      {
+        "modelo": "submuestreo",
+        "tipo_grupo": "fuente_diagnostico",
+        "grupo": "follow_up",
+        "n": 726,
+        "n_melanomas": 0,
+        "n_nevos": 726,
+        "umbral_global": 0.6,
+        "recall_melanoma": null,
+        "especificidad_nevo": 0.9958677685950413,
+        "f1_macro": null,
+        "falsos_negativos": 0,
+        "falsos_positivos": 3
+      },
+      {
+        "modelo": "submuestreo",
+        "tipo_grupo": "fuente_diagnostico",
+        "grupo": "histo",
+        "n": 358,
+        "n_melanomas": 98,
+        "n_nevos": 260,
+        "umbral_global": 0.6,
+        "recall_melanoma": 0.8571428571428571,
+        "especificidad_nevo": 0.47692307692307695,
+        "f1_macro": 0.57570873234095,
+        "falsos_negativos": 14,
+        "falsos_positivos": 136
+      }
+    ]
+  },
+  "ablacion_baseline": {
+    "particion": "train_cnn/val_cnn original; test no usado",
+    "train": 785,
+    "validacion": 197,
+    "regla_umbral": {
+      "grilla": [
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "recall_minimo": 0.85,
+      "criterio": "mayor F1 macro entre umbrales elegibles"
+    },
+    "resultados": {
+      "solo_forma": {
+        "caracteristicas": [
+          "area",
+          "area_rel",
+          "perimetro",
+          "circularidad",
+          "solidez",
+          "asimetria"
+        ],
+        "n_caracteristicas": 6,
+        "umbral_seleccionado": null,
+        "metricas_umbral_0_5": {
+          "umbral": 0.5,
+          "accuracy": 0.6345177664974619,
+          "precision_melanoma": 0.6547619047619048,
+          "recall_melanoma": 0.5612244897959183,
+          "especificidad": 0.7070707070707071,
+          "ppv_estimado_prevalencia_10pct": 0.17551494052799535,
+          "f1_macro": 0.6323864814430852,
+          "falsos_positivos": 29,
+          "falsos_negativos": 43,
+          "matriz_confusion": [
+            [
+              70,
+              29
+            ],
+            [
+              43,
+              55
+            ]
+          ]
+        },
+        "metricas_umbral_seleccionado": null
+      },
+      "solo_color": {
+        "caracteristicas": [
+          "hsv1_media",
+          "hsv1_desvio",
+          "hsv2_media",
+          "hsv2_desvio",
+          "hsv3_media",
+          "hsv3_desvio",
+          "lab1_media",
+          "lab1_desvio",
+          "lab2_media",
+          "lab2_desvio",
+          "lab3_media",
+          "lab3_desvio"
+        ],
+        "n_caracteristicas": 12,
+        "umbral_seleccionado": 0.6,
+        "metricas_umbral_0_5": {
+          "umbral": 0.5,
+          "accuracy": 0.7868020304568528,
+          "precision_melanoma": 0.7295081967213115,
+          "recall_melanoma": 0.9081632653061225,
+          "especificidad": 0.6666666666666666,
+          "ppv_estimado_prevalencia_10pct": 0.23237597911227154,
+          "f1_macro": 0.7838557993730407,
+          "falsos_positivos": 33,
+          "falsos_negativos": 9,
+          "matriz_confusion": [
+            [
+              66,
+              33
+            ],
+            [
+              9,
+              89
+            ]
+          ]
+        },
+        "metricas_umbral_seleccionado": {
+          "umbral": 0.6,
+          "accuracy": 0.7868020304568528,
+          "precision_melanoma": 0.75,
+          "recall_melanoma": 0.8571428571428571,
+          "especificidad": 0.7171717171717171,
+          "ppv_estimado_prevalencia_10pct": 0.25190839694656486,
+          "f1_macro": 0.7858695652173913,
+          "falsos_positivos": 28,
+          "falsos_negativos": 14,
+          "matriz_confusion": [
+            [
+              71,
+              28
+            ],
+            [
+              14,
+              84
+            ]
+          ]
+        }
+      },
+      "forma_y_color": {
+        "caracteristicas": [
+          "area",
+          "area_rel",
+          "perimetro",
+          "circularidad",
+          "solidez",
+          "asimetria",
+          "hsv1_media",
+          "hsv1_desvio",
+          "hsv2_media",
+          "hsv2_desvio",
+          "hsv3_media",
+          "hsv3_desvio",
+          "lab1_media",
+          "lab1_desvio",
+          "lab2_media",
+          "lab2_desvio",
+          "lab3_media",
+          "lab3_desvio"
+        ],
+        "n_caracteristicas": 18,
+        "umbral_seleccionado": 0.5,
+        "metricas_umbral_0_5": {
+          "umbral": 0.5,
+          "accuracy": 0.7969543147208121,
+          "precision_melanoma": 0.7457627118644068,
+          "recall_melanoma": 0.8979591836734694,
+          "especificidad": 0.696969696969697,
+          "ppv_estimado_prevalencia_10pct": 0.24769703172978508,
+          "f1_macro": 0.7950478568456096,
+          "falsos_positivos": 30,
+          "falsos_negativos": 10,
+          "matriz_confusion": [
+            [
+              69,
+              30
+            ],
+            [
+              10,
+              88
+            ]
+          ]
+        },
+        "metricas_umbral_seleccionado": {
+          "umbral": 0.5,
+          "accuracy": 0.7969543147208121,
+          "precision_melanoma": 0.7457627118644068,
+          "recall_melanoma": 0.8979591836734694,
+          "especificidad": 0.696969696969697,
+          "ppv_estimado_prevalencia_10pct": 0.24769703172978508,
+          "f1_macro": 0.7950478568456096,
+          "falsos_positivos": 30,
+          "falsos_negativos": 10,
+          "matriz_confusion": [
+            [
+              69,
+              30
+            ],
+            [
+              10,
+              88
+            ]
+          ]
+        }
+      }
+    }
+  }
+}
