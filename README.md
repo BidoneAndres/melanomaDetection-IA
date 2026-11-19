@@ -47,7 +47,7 @@ La demo interactiva publicada en GitHub Pages está en desarrollo (ver [Roadmap]
 }
 ```
 
-**🔗 Demo en vivo:** https://BidoneAndres.github.io/melanomaDetection-IA/ *(pendiente de publicación)*
+**🔗 Demo en vivo:** pendiente de publicación.
 
 ---
 
@@ -57,7 +57,7 @@ El diagnóstico dermatológico inicial presenta variabilidad entre profesionales
 
 Este proyecto desarrolla un clasificador binario (**melanoma** vs. **nevo**) para imágenes dermatoscópicas. Dada una imagen, el sistema devuelve la probabilidad de melanoma y la etiqueta resultante, como herramienta de apoyo a la decisión. 
 
-Se comparan dos enfoques: un baseline tradicional (Random Forest sobre características geométricas y de color extraídas con OpenCV) y una red convolucional (ResNet18 con transfer learning). Ambos superan las metas fijadas (recall de melanoma y F1 macro mayores al 80 %), pero con el tamaño del conjunto de prueba **no se puede afirmar que la CNN supere al baseline**; su diferencia más clara está en los falsos positivos.
+Se comparan dos enfoques: un baseline tradicional (Random Forest sobre características geométricas y de color extraídas con OpenCV) y una red convolucional (ResNet18 con transfer learning). Ambos superan las metas fijadas (recall de melanoma y F1 macro mayores al 80 %). La comparación pareada actual es exploratoria porque el conjunto de prueba ya se había consultado en una evaluación anterior.
 
 ### Contexto académico
 
@@ -92,19 +92,20 @@ Se comparan dos enfoques: un baseline tradicional (Random Forest sobre caracter�
 **Decisiones sobre los datos:**
 
 - Se conservaron solo las lesiones con **una única imagen** (`lesion_id` único), para evitar que fotos de la misma lesión caigan en train y test (fuga de datos).
-- Se balanceó por submuestreo **después** de filtrar, ya que el original contiene muchos más nevos que melanomas y el modelo tendería a predecir siempre "nevo" (falsos negativos).
+- Se balanceó por submuestreo **después** de filtrar. Esto descartó cerca del 80 % de los nevos disponibles y dejó una prevalencia artificial de melanoma del 50 %; por eso, las métricas de precisión del test balanceado no representan directamente una población real.
+- No se comparó este enfoque con entrenamiento sobre los datos desbalanceados usando `class_weight`; esa alternativa queda como trabajo futuro.
 - La partición train/test se hizo antes de cualquier preprocesamiento, de forma estratificada.
 
 **Volumen final:** 1228 imágenes (614 por clase).
 
 | Conjunto | Imágenes | Uso |
 |---|---|---|
-| Train | 982 | Baseline (validación cruzada) |
-| Train de la CNN | 785 | Entrenamiento de la red |
-| Validación | 197 | Parada temprana y elección del umbral (solo CNN) |
+| Train | 982 | Validación cruzada del baseline en el notebook 06 |
+| Train final | 785 | Entrenamiento de la CNN y del baseline comparativo |
+| Validación | 197 | Parada temprana de la CNN y selección de umbral para ambos modelos |
 | Test | 246 (123 por clase) | Evaluación final |
 
-Los datos no se versionan (`data/` está excluido del repositorio).
+Las imágenes originales de HAM10000 y las características extraídas no se versionan. El repositorio sí incluye algunos CSV ligeros de metadatos y particiones.
 
 ---
 
@@ -137,10 +138,10 @@ Se guarda el checkpoint con menor pérdida de validación. Se eligió ResNet18 p
 
 ### Validación
 
-- Split train/test 80/20 estratificado; el test se usa solo para la evaluación final.
-- Baseline: validación cruzada de 5 particiones, solo en train.
-- CNN: 20 % de train como validación, para la parada temprana y para elegir el umbral.
-- **Umbral de decisión:** se fijó antes de evaluar en test, con la regla "entre los umbrales con recall de melanoma ≥ 0,85, el de mayor F1 macro" (resultado: 0,7).
+- Split train/test 80/20 estratificado; el test no se usa para seleccionar modelos ni umbrales.
+- Baseline: validación cruzada de 5 particiones en las 982 imágenes de train (notebook 06). Para la comparación final, se entrenó con las mismas 785 imágenes que la CNN.
+- CNN: 20 % de train (197 imágenes) como validación para parada temprana y selección de umbral. Esa misma validación se usó para el baseline comparativo.
+- **Umbral de decisión de ambos modelos:** se usó la misma grilla (0,4 a 0,8, en pasos de 0,1) y el mismo criterio: entre los umbrales con recall de melanoma ≥ 0,85, elegir el de mayor F1 macro. Resultado: 0,7 para la CNN y 0,5 para el baseline.
 - Intervalos de confianza al 95 % por bootstrap (2000 remuestreos).
 - **Semilla global 42** en todo proceso aleatorio (balanceo, splits, validación cruzada, Random Forest, inicialización, aumentación y bootstrap).
 
@@ -158,16 +159,34 @@ Umbral de la CNN según la validación (197 imágenes):
 | **0,7** | **0,857** | **0,848** | **16** | **14** |
 | 0,8 | 0,776 | 0,832 | 11 | 22 |
 
-Evaluación final en test (246 imágenes, 123 melanomas y 123 nevos; ambos modelos sobre las mismas imágenes):
+El umbral del baseline seleccionado con la misma regla fue 0,5 (recall 0,898 y F1 macro 0,795 en validación).
+
+Comparación exploratoria en test (246 imágenes, 123 melanomas y 123 nevos; ambos modelos sobre las mismas imágenes):
 
 | Modelo | Recall melanoma (IC 95 %) | F1 macro (IC 95 %) | Falsos negativos | Falsos positivos |
 |---|---|---|---|---|
-| Baseline (RF + OpenCV) | 0,886 [0,83, 0,94] | 0,841 [0,79, 0,89] | 14 | 25 |
+| Baseline (RF + OpenCV) | 0,878 [0,82, 0,94] | 0,833 [0,78, 0,88] | 15 | 26 |
 | CNN (ResNet18) | 0,902 [0,85, 0,95] | 0,886 [0,84, 0,93] | 12 | 16 |
 
-Ambos modelos superan las metas del 80 %. Los intervalos de confianza se solapan, por lo que **con 123 casos por clase no se puede afirmar que la CNN supere al baseline**. La diferencia más clara está en los falsos positivos (16 contra 25), con un recall equivalente.
+Bootstrap pareado de la diferencia (CNN menos baseline):
 
-La CNN se evaluó en test una única vez. Las características del baseline se regeneraron con el pipeline final antes de su evaluación definitiva.
+| Métrica | Diferencia | IC 95 % pareado |
+|---|---:|---:|
+| Recall melanoma | 0,024 | [-0,050, 0,098] |
+| F1 macro | 0,053 | [0,008, 0,098] |
+
+El intervalo pareado del recall incluye cero; el de F1 macro no. Sin embargo, **el test ya se había consultado en una evaluación anterior**, por lo que esta comparación es exploratoria y no constituye una confirmación independiente de superioridad. Ambos modelos superan el 80 % en recall y F1 macro en esta muestra.
+
+El test tiene prevalencia de melanoma del 50 %, mientras que una prevalencia de referencia más realista ronda el 10 %. Para ilustrar el efecto, se estimó el valor predictivo positivo (VPP) con la sensibilidad y especificidad observadas en esta comparación, suponiendo que ambas se mantienen con esa prevalencia:
+
+| Modelo | VPP estimado con prevalencia de melanoma del 10 % |
+|---|---:|
+| Baseline (RF + OpenCV) | 31,6 % |
+| CNN (ResNet18) | 43,5 % |
+
+Estos VPP son **estimaciones ajustadas**, no resultados medidos en una muestra con prevalencia real. Los falsos positivos reportados arriba son conteos sobre los 123 nevos del test balanceado, no una estimación directa de la cantidad esperable en una población. El cálculo no reemplaza una evaluación externa con prevalencia representativa.
+
+Las características del baseline se regeneraron con el pipeline final antes de esta comparación. Debido a la evaluación previa del test, los nuevos resultados se reportan como exploratorios.
 
 **Análisis crítico:** el baseline depende mucho del color (la característica más importante del Random Forest es `lab2_media`), lo que podría reflejar una pista de la cámara o la iluminación y no de la lesión. La CNN muestra un comportamiento más equilibrado, pero no se verificó en qué se apoya. Con más tiempo se haría un análisis de ablación (solo forma y solo color), se compararían otras arquitecturas y se probaría con una fuente de imágenes distinta a HAM10000.
 
@@ -178,10 +197,12 @@ La CNN se evaluó en test una única vez. Las características del baseline se r
 **Limitaciones:**
 
 - Test de 246 imágenes (123 melanomas): los resultados tienen un margen de error de varios puntos.
+- El submuestreo produjo un test balanceado que no refleja la prevalencia poblacional; el VPP ajustado al 10 % es una estimación y depende de que sensibilidad y especificidad se mantengan.
+- No se evaluó el uso de `class_weight` conservando los nevos disponibles; sería una alternativa para un experimento futuro con una partición de evaluación independiente y representativa.
 - El filtro por `lesion_id` único elimina las lesiones con varias fotos, que suelen ser las más dudosas, por lo que probablemente simplifica el problema.
 - Posible dependencia del color en el baseline (ver análisis crítico).
 - El modelo solo es válido para imágenes dermatoscópicas similares a las de HAM10000; no generaliza a fotos comunes.
-- La CNN se entrenó con 785 imágenes y el baseline con 982, por lo que la comparación no es perfectamente pareja.
+- Para esta comparación ambos modelos se entrenaron con 785 imágenes; la validación cruzada descriptiva del notebook 06 usa las 982 imágenes de train.
 - La segmentación se evaluó visualmente, sin máscaras de referencia.
 - Los resultados pueden variar levemente entre sistemas por diferencias numéricas de las librerías, aun con semillas fijas.
 - La probabilidad es una salida del modelo y **no es un diagnóstico médico**.
@@ -200,11 +221,11 @@ La CNN se evaluó en test una única vez. Las características del baseline se r
 ```text
 .
 ├── README.md
-├── pyprojet.toml
+├── pyproject.toml
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt          # inferencia (versiones fijas)
-├── imagenesProbar/           # imágenes para probar la inferencia
+├── imagenesProbar/           # ejemplos de melanoma y nevo
 ├── src/
 │   ├── preprocesamiento.py   # pelos, esquinas y segmentación
 │   ├── dataset.py            # Dataset y aumentación (PyTorch)
@@ -212,12 +233,15 @@ La CNN se evaluó en test una única vez. Las características del baseline se r
 │   ├── entrenamiento.py      # bucles de entrenamiento y evaluación
 │   ├── inferencia.py         # predicción sobre una imagen
 │   ├── predecir.py           # script de consola
+│   ├── division.py           # partición estratificada train/test
 │   └── utils.py              # semillas
 ├── notebooks/                # exploración y experimentos (01 a 09)
-├── data/                     # excluido de Git
-│   ├── raw/                  #   HAM10000 original
-│   └── processed/            #   metadatos, splits y características
-└── models/                   # pesos y historial de entrenamiento
+├── tests/                    # pruebas del split y la inferencia
+├── data/                     # imágenes y características generadas, excluidas de Git
+│   ├── raw/                  # HAM10000_metadata.csv versionado
+│   └── processed/            # metadatos y particiones CSV versionados
+└── models/
+    └── cnn_resnet18.pt       # checkpoint incluido en el repositorio (~44 MB)
 ```
 
 ---
@@ -228,10 +252,27 @@ La CNN se evaluó en test una única vez. Las características del baseline se r
 
 - [Docker](https://docs.docker.com/get-docker/) con Docker Compose
 - Git
-- Para ejecutar la inferencia se necesita el modelo `models/cnn_resnet18.pt`, que se genera con el notebook 08 (los pesos no se versionan).
-- Para reproducir el flujo completo, HAM10000 con `HAM10000_metadata.csv` en `data/raw/` y las imágenes en `data/raw/images/`. Se descarga de [Kaggle](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000?resource=download) y las imágenes hay que unificarlas en una sola carpeta `images`.
+- El checkpoint `models/cnn_resnet18.pt` está incluido en el repositorio para permitir la inferencia sin reentrenar. El notebook 08 permite volver a generarlo.
+- Para reproducir el flujo completo, descargar y extraer HAM10000 desde [Kaggle](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000?resource=download). Dejar `HAM10000_metadata.csv` en `data/raw/` y copiar las imágenes de `HAM10000_images_part_1/` y `HAM10000_images_part_2/` a una única carpeta `data/raw/images/`, conservando los nombres originales.
 
 ### Pasos
+
+Crear la carpeta con las imágenes después de extraer los dos archivos ZIP. En PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force data/raw/images
+Get-ChildItem -Path data/raw/HAM10000_images_part_1,data/raw/HAM10000_images_part_2 -Filter *.jpg |
+    Copy-Item -Destination data/raw/images
+```
+
+En Linux o macOS:
+
+```bash
+mkdir -p data/raw/images
+cp data/raw/HAM10000_images_part_1/*.jpg data/raw/HAM10000_images_part_2/*.jpg data/raw/images/
+```
+
+La construcción de la imagen Docker no necesita que HAM10000 esté descargado; los datos se montan desde el equipo anfitrión al ejecutar los notebooks.
 
 ```bash
 git clone https://github.com/BidoneAndres/melanomaDetection-IA
@@ -241,12 +282,28 @@ docker compose build
 
 La primera construcción tarda por la descarga de las dependencias; las siguientes reutilizan la caché de Docker.
 
+### Instalar dependencias y ejecutar pruebas localmente
+
+Con [uv](https://docs.astral.sh/uv/), instalar el entorno del proyecto y las dependencias de desarrollo:
+
+```bash
+uv sync --extra dev
+uv run pytest
+```
+
+También se pueden instalar las dependencias de ejecución directamente desde `requirements.txt`:
+
+```bash
+uv venv
+uv pip install --python .venv -r requirements.txt
+```
+
 
 ## ▶️ Uso
 
 ### Clasificar una imagen
 
-Colocar las imágenes dermatoscópicas en la carpeta `imagenesProbar/`:
+La carpeta `imagenesProbar/` incluye ejemplos de ambas clases (`melanoma1.jpg` a `melanoma4.jpg` y `nevo1.jpg`). También se pueden colocar otras imágenes dermatoscópicas allí:
 
 ```bash
 docker compose run --build --rm app python -m src.predecir /app/imagenesProbar/imagen.jpg
@@ -259,6 +316,7 @@ docker compose run --build --rm app python -m src.predecir /app/imagenesProbar/i
 ```
 
 La inferencia usa `models/cnn_resnet18.pt` y el umbral configurado en `src/inferencia.py`. 
+Si el archivo no existe o no es una imagen válida, el programa devuelve un JSON con el error y termina con código distinto de cero.
 
 ### Reproducir el flujo de trabajo
 
@@ -292,7 +350,8 @@ docker compose down
 
 - [ ] API REST con FastAPI (validación de entrada y errores HTTP claros)
 - [ ] Interfaz de usuario y demo publicada en GitHub Pages
-- [ ] Tests automatizados con `pytest` y logging
+- [x] Pruebas automatizadas básicas con `pytest` para el split y la inferencia
+- [ ] Logging de la aplicación
 - [ ] Análisis de ablación (solo forma y solo color) y comparación con otras arquitecturas
 - [ ] Evaluación con imágenes dermatoscópicas de una fuente distinta a HAM10000
 
@@ -300,7 +359,7 @@ docker compose down
 
 ## 👥 Autores
 
-- **Bidone Andres** — [GitHub](https://github.com/BidoneAndres) · [LinkedIn](https://linkedin.com/in/usuario)
+- **Bidone Andres** — [GitHub](https://github.com/BidoneAndres)
 
 ---
 

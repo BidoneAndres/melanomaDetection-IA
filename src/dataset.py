@@ -30,16 +30,17 @@ def get_transforms(entrenamiento, tamano=224):
 
 
 class LesionDataset(Dataset):
-    def __init__(self, df, transform=None):
+    def __init__(self, df, transform=None, image_dir=IMGS):
         self.ids = df["image_id"].tolist()
         self.etiquetas = df["etiqueta"].tolist()
         self.transform = transform
+        self.image_dir = Path(image_dir)
 
     def __len__(self):
         return len(self.ids)
 
     def __getitem__(self, i):
-        img = Image.open(IMGS / f"{self.ids[i]}.jpg").convert("RGB")
+        img = Image.open(self.image_dir / f"{self.ids[i]}.jpg").convert("RGB")
         if self.transform:
             img = self.transform(img)
         return img, torch.tensor(self.etiquetas[i], dtype=torch.float32)

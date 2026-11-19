@@ -12,7 +12,7 @@ def main():
 
     try:
         resultado = predecir(args.imagen)
-    except FileNotFoundError as e:
+    except (FileNotFoundError, ValueError) as e:
         print(json.dumps({"error": str(e)}, ensure_ascii=False))
         raise SystemExit(1)
 
